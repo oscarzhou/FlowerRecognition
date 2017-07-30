@@ -57,7 +57,7 @@ import java.util.Set;
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String CLOUD_VISION_API_KEY = "YOUR_API_KEY";
+    private static final String CLOUD_VISION_API_KEY = "AIzaSyAy4tHJKuC2SQT1wYlXqBlxK5xmUonMZko";
     public static final String FILE_NAME = "temp.jpg";
     private static final String ANDROID_CERT_HEADER = "X-Android-Cert";
     private static final String ANDROID_PACKAGE_HEADER = "X-Android-Package";
@@ -397,11 +397,22 @@ public class MainActivity extends AppCompatActivity {
                 if(bPass) continue;
                 if(counter == 5) break;
                 counter++;
-                message += String.format(Locale.US, "%.2f%%: %s", label.getScore()*100, parsedWord);
+                message += String.format(Locale.US, "%f%%: %s", label.getScore()*100, parsedWord);
                 message += "\n";
             }
         } else {
             message += "nothing";
+        }
+
+        if (counter == 0){
+            if (labels != null) {
+                for (EntityAnnotation label : labels) {
+                    message += String.format(Locale.US, "%f%%: %s", label.getScore()*100, label.getDescription());
+                    message += "\n";
+                }
+            } else {
+                message += "nothing";
+            }
         }
 
         return message;
